@@ -5,7 +5,7 @@ import LayoutPage from './components/LayoutPage';
 function App() {
   return (
     <div>
-      <LayoutPage />
+      <LayoutPage page={"main"} />
     </div>
   );
 }

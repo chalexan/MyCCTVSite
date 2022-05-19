@@ -1,10 +1,16 @@
 import { Empty } from "antd";
 import { Space, Image } from "antd";
 import { Layout, Menu, Breadcrumb } from "antd";
+import { useState } from "react";
+import DevicesPage from "./DevicesPage";
+import InfoPage from "./InfoPage";
+import MainPage from "./MainPage";
+import PortfolioPage from "./PortfolioPage";
+import WorkPage from "./WorkPage";
 
-const LayoutPage = () => {
+const LayoutPage = (props) => {
   const { Header, Content, Footer } = Layout;
-
+  const [page, setPage] = useState("main");
   return (
     <Layout className="layout">
       <Header>
@@ -20,11 +26,53 @@ const LayoutPage = () => {
           <span> </span>
           <div>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["-1"]}>
-              <Menu.Item key={-1}>Главная</Menu.Item>
-              <Menu.Item key={0}>Услуги</Menu.Item>
-              <Menu.Item key={1}>Оборудование</Menu.Item>
-              <Menu.Item key={2}>Портфолио</Menu.Item>
-              <Menu.Item key={3}>Обратная связь</Menu.Item>
+              <Menu.Item key={-1}>
+                <a
+                  onClick={() => {
+                    setPage("main");
+                  }}
+                >
+                  Главная
+                </a>
+              </Menu.Item>
+              <Menu.Item key={0}>
+                {" "}
+                <a
+                  onClick={() => {
+                    setPage("work");
+                  }}
+                >
+                  Услуги
+                </a>
+              </Menu.Item>
+              <Menu.Item key={1}>
+                <a
+                  onClick={() => {
+                    setPage("devices");
+                  }}
+                >
+                  Оборудование
+                </a>
+              </Menu.Item>
+              <Menu.Item key={2}>
+                {" "}
+                <a
+                  onClick={() => {
+                    setPage("portfolio");
+                  }}
+                >
+                  Портфолио
+                </a>
+              </Menu.Item>
+              <Menu.Item key={3}>
+                <a
+                  onClick={() => {
+                    setPage("info");
+                  }}
+                >
+                  Обратная связь
+                </a>
+              </Menu.Item>
             </Menu>
           </div>
         </Space>
@@ -32,10 +80,14 @@ const LayoutPage = () => {
       <Content style={{ padding: "0 50px" }}>
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Сrimea Security Systems</Breadcrumb.Item>
-          <Breadcrumb.Item>Главная</Breadcrumb.Item>
+          {/* <Breadcrumb.Item>Главная</Breadcrumb.Item> */}
         </Breadcrumb>
-        <div className="site-layout-content">
-          <Empty />
+        <div key={page} className="site-layout-content">
+          {page === "main" ? <MainPage /> : null}
+          {page === "work" ? <WorkPage /> : null}
+          {page === "devices" ? <DevicesPage /> : null}
+          {page === "portfolio" ? <PortfolioPage /> : null}
+          {page === "info" ? <InfoPage /> : null}
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
