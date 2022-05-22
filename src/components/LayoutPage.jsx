@@ -1,4 +1,3 @@
-import { Empty } from "antd";
 import { Space, Image } from "antd";
 import { Layout, Menu, Breadcrumb } from "antd";
 import { useState } from "react";
@@ -7,10 +6,31 @@ import InfoPage from "./InfoPage";
 import MainPage from "./MainPage";
 import PortfolioPage from "./PortfolioPage";
 import WorkPage from "./WorkPage";
+import {
+  SettingOutlined,
+  MailOutlined,
+  HomeOutlined,
+  VideoCameraOutlined,
+  PictureOutlined,
+  MenuOutlined,
+} from "@ant-design/icons";
+import { useEffect } from "react";
 
 const LayoutPage = (props) => {
   const { Header, Content, Footer } = Layout;
   const [page, setPage] = useState("main");
+  const [winWidth, setWinwidth] = useState(
+    document.documentElement.scrollWidth
+  );
+
+  useEffect(() => {
+    setWinwidth(document.documentElement.scrollWidth);
+    const menuItem = document.getElementById("menu1");
+    winWidth > 500
+      ? (menuItem.style.minWidth = `${winWidth - 100}px`)
+      : (menuItem.style.minWidth = "100px");
+  }, []);
+
   return (
     <Layout className="layout">
       <Header>
@@ -25,27 +45,35 @@ const LayoutPage = (props) => {
           </div>
           <span> </span>
           <div>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["-1"]}>
-              <Menu.Item key={-1}>
-                <a
-                  onClick={() => {
-                    setPage("main");
-                  }}
-                >
-                  Главная
-                </a>
+            <Menu
+              id="menu1"
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["-1"]}
+              overflowedIndicator={<MenuOutlined />}
+            >
+              <Menu.Item
+                key={-1}
+                title="Главная"
+                icon={<HomeOutlined />}
+                onClick={() => {
+                  setPage("main");
+                }}
+              >
+                Главная
               </Menu.Item>
-              <Menu.Item key={0}>
-                {" "}
-                <a
-                  onClick={() => {
-                    setPage("work");
-                  }}
-                >
-                  Услуги
-                </a>
+
+              <Menu.Item
+                key="SubMenu"
+                title="Услуги"
+                onClick={() => {
+                  setPage("work");
+                }}
+                icon={<SettingOutlined />}
+              >
+                Услуги
               </Menu.Item>
-              <Menu.Item key={1}>
+              <Menu.Item key={1} icon={<VideoCameraOutlined />}>
                 <a
                   onClick={() => {
                     setPage("devices");
@@ -54,7 +82,7 @@ const LayoutPage = (props) => {
                   Оборудование
                 </a>
               </Menu.Item>
-              <Menu.Item key={2}>
+              <Menu.Item key={2} icon={<PictureOutlined />}>
                 {" "}
                 <a
                   onClick={() => {
@@ -64,7 +92,7 @@ const LayoutPage = (props) => {
                   Портфолио
                 </a>
               </Menu.Item>
-              <Menu.Item key={3}>
+              <Menu.Item key={3} icon={<MailOutlined />}>
                 <a
                   onClick={() => {
                     setPage("info");
@@ -78,7 +106,7 @@ const LayoutPage = (props) => {
         </Space>
       </Header>
       <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
+        <Breadcrumb style={{ margin: "16px 0", "font-size": "large" }}>
           <Breadcrumb.Item>Сrimea Security Systems</Breadcrumb.Item>
           {/* <Breadcrumb.Item>Главная</Breadcrumb.Item> */}
         </Breadcrumb>
